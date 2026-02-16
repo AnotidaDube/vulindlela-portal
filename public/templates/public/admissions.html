@@ -1,0 +1,99 @@
+{% extends 'coreapp/base.html' %}
+{% block title %}Admissions | Nikita Mangena High{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Admissions & Fees</h1>
+    <p>Join the Nikita Mangena Family Today</p>
+</div>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mb-4">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-coins me-2"></i>2026 Fee Structure (Per Term)</h5>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Amount (USD)</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-bold">Tuition Fees</td>
+                                <td>$120.00</td>
+                                <td>Required for all students</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Boarding Fees</td>
+                                <td>$450.00</td>
+                                <td>Includes meals and laundry</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">School Levy</td>
+                                <td>$50.00</td>
+                                <td>Development fund</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Uniform (Full Kit)</td>
+                                <td>$180.00</td>
+                                <td>One-time payment (Form 1)</td>
+                            </tr>
+                            <tr class="table-dark">
+                                <td class="fw-bold">TOTAL (Boarders)</td>
+                                <td class="fw-bold">$650.00</td>
+                                <td>Per Term</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="alert alert-light border border-secondary d-flex align-items-center" role="alert">
+                <i class="fas fa-file-pdf fa-3x text-danger me-3"></i>
+                <div>
+                    <h5 class="fw-bold mb-1">Download Application Form</h5>
+                    <p class="mb-0 small text-muted">Please fill this form and submit it at the school office or via email.</p>
+                </div>
+                <a href="#" class="btn btn-outline-danger ms-auto fw-bold">Download <i class="fas fa-download ms-1"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card bg-dark text-white shadow mb-4" style="border-radius: 15px;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-4">
+                        <i class="fas fa-university fa-2x text-warning"></i>
+                        <span class="badge bg-warning text-dark">NOSTRO / USD</span>
+                    </div>
+                    <h5 class="card-title text-uppercase text-muted small">Bank Name</h5>
+                    <h4 class="fw-bold">CBZ BANK</h4>
+                    
+                    <div class="mt-4">
+                        <h5 class="card-title text-uppercase text-muted small">Account Number</h5>
+                        <h3 class="fw-bold" style="letter-spacing: 2px;">0212 4587 9901</h3>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h5 class="card-title text-uppercase text-muted small">Account Name</h5>
+                        <p class="fw-bold mb-0">Nikita Mangena High SDC</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-danger mb-3">
+                <div class="card-body text-center">
+                    <h5 class="fw-bold text-danger">Need Help?</h5>
+                    <p class="small text-muted">Contact the Bursar's office for payment plans.</p>
+                    <a href="{% url 'public:contact_us' %}" class="btn btn-danger btn-sm w-100">Contact Bursar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

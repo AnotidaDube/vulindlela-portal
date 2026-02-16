@@ -1,0 +1,122 @@
+{% extends 'coreapp/base.html' %}
+{% load static %}
+{% block title %}Teacher Dashboard{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="fw-bold text-primary mb-4">📘 Teacher Dashboard</h2>
+  <p class="text-muted">Welcome, {{ teacher.full_name }}. Search for a student and record their marks below.</p>
+
+  <!-- 🔔 Feedback Messages -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <!-- 🔍 Search Student -->
+  <form method="get" class="row g-2 mb-4">
+    <div class="col-md-6">
+      <input type="text" name="registration_number" value="{{ search_reg }}" class="form-control" placeholder="Enter Registration Number">
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+  </form>
+
+  {% if students %}
+  <!-- 👤 Student Info -->
+  <h4 class="fw-bold text-success mb-3">Student Found</h4>
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>Full Name</th>
+        <th>Reg No.</th>
+        <th>Class</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in students %}
+      <tr>
+        <td>{{ student.full_name }}</td>
+        <td>{{ student.registration_number }}</td>
+        <td>{{ student.class_assigned.name }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- 📝 Mark Entry Form -->
+  <h5 class="mt-4">➕ Record Mark</h5>
+  <form method="post" class="row g-3">
+    {% csrf_token %}
+    <input type="hidden" name="student_reg" value="{{ students.0.registration_number }}">
+
+    <div class="col-md-4">
+      <select name="subject_id" class="form-select" required>
+        <option value="">Select Subject</option>
+        {% for subject in subjects %}
+          <option value="{{ subject.id }}">{{ subject.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-3">
+      <select name="term_id" class="form-select" required>
+        <option value="">Select Term</option>
+        {% for term in terms %}
+          <option value="{{ term.id }}">{{ term.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-2">
+      <input type="number" name="score" class="form-control" placeholder="Score" required>
+    </div>
+
+    <div class="col-md-3">
+      <input type="text" name="comment" class="form-control" placeholder="Comment (optional)">
+    </div>
+
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-success w-100">Save Mark</button>
+    </div>
+  </form>
+  {% endif %}
+
+  <!-- 📊 Recorded Marks -->
+  <hr class="my-5">
+  <h4 class="fw-bold text-primary mb-3">📋 Recorded Marks</h4>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="table-secondary">
+        <tr>
+          <th>Student</th>
+          <th>Reg No.</th>
+          <th>Subject</th>
+          <th>Term</th>
+          <th>Score</th>
+          <th>Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for mark in marks_records %}
+        <tr>
+          <td>{{ mark.student.full_name }}</td>
+          <td>{{ mark.student.registration_number }}</td>
+          <td>{{ mark.subject.name }}</td>
+          <td>{{ mark.term.name }}</td>
+          <td>{{ mark.score }}</td>
+          <td>{{ mark.comment|default:"—" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" class="text-center text-muted">No marks recorded yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

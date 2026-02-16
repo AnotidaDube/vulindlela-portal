@@ -1,0 +1,61 @@
+Ah! That usually happens in Django when the authentication check isn’t done correctly. Most often, it’s either:
+
+You’re checking the raw password against the database instead of using Django’s password hashing.
+
+You’re logging in a custom user model or a model that isn’t connected to Django’s auth system, and you didn’t verify the password properly.
+
+Let’s go step by step.
+
+1️⃣ If you’re using a custom Student model
+
+Say your Student model looks like this:
+
+# students/models.py
+from django.db import models
+
+class Student(models.Model):
+    reg_no = models.CharField(max_length=20, unique=True)
+    password = models.CharField(max_length=128)  # stored as hash
+    ...
+
+
+You cannot do this:
+
+student = Student.objects.get(reg_no=reg_no)
+if student.password == entered_password:  # ❌ WRONG
+    ...
+
+
+Because Django hashes passwords. You must use:
+
+from django.contrib.auth.hashers import check_password
+
+if check_password(entered_password, student.password):
+    # password matches
+
+2️⃣ If you want to use Django’s built-in auth system
+
+The easiest way is to make Student inherit from AbstractBaseUser (or use User) so you can use:
+
+from django.contrib.auth import authenticate, login
+
+student = authenticate(request, username=reg_no, password=entered_password)
+if student is not None:
+    login(request, student)
+    # redirect to dashboard
+else:
+    # invalid login
+
+3️⃣ Quick fix if you just stored raw passwords (not recommended for production)
+student = Student.objects.get(reg_no=reg_no)
+if student.password == entered_password:
+    # login
+else:
+    messages.error(request, "Incorrect password")
+
+
+⚠️ Only do this if passwords are stored in plain text (very insecure). Ideally, hash them using make_password when saving.
+
+If you want, I can rewrite your student_login view so it works correctly with hashed passwords and fixes the “incorrect password” issue immediately.
+
+Do you want me to do that?

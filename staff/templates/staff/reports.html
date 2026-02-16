@@ -1,0 +1,142 @@
+{% extends 'coreapp/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">📊 Admissions Report</h2>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Summary Cards -->
+    <div class="row text-center mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card border-primary shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title text-primary">Total Applications</h6>
+                    <h3>{{ summary.total }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card border-success shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title text-success">Approved</h6>
+                    <h3>{{ summary.approved }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card border-warning shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title text-warning">Pending</h6>
+                    <h3>{{ summary.pending }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card border-danger shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title text-danger">Rejected</h6>
+                    <h3>{{ summary.rejected }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            <h5 class="card-title mb-3">📈 Status Distribution</h5>
+            <canvas id="statusChart" height="120"></canvas>
+        </div>
+    </div>
+
+    <!-- Applications by Class -->
+    <h4 class="mt-4">📚 Applications by Class</h4>
+    <table class="table table-hover table-striped mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Class Applied</th>
+                <th>Total Applications</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in by_class %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ c.class_applied }}</td>
+                <td>{{ c.total }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center py-3">No class data available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="mt-3">
+        <a href="{% url 'staff:applications' %}" class="btn btn-outline-secondary">
+            ⬅ Back to Applications
+        </a>
+        <a href="{% url 'staff:dashboard' %}" class="btn btn-outline-primary">
+            🏠 Dashboard
+        </a>
+    </div>
+</div>
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const ctx = document.getElementById('statusChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Approved', 'Pending', 'Rejected'],
+            datasets: [{
+                label: 'Applications',
+                data: [
+                    {{ summary.approved|default:0 }},
+                    {{ summary.pending|default:0 }},
+                    {{ summary.rejected|default:0 }}
+                ],
+                backgroundColor: [
+                    'rgba(25, 135, 84, 0.8)',   // green
+                    'rgba(255, 193, 7, 0.8)',   // yellow
+                    'rgba(220, 53, 69, 0.8)'    // red
+                ],
+                borderColor: [
+                    'rgba(25, 135, 84, 1)',
+                    'rgba(255, 193, 7, 1)',
+                    'rgba(220, 53, 69, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' },
+                title: {
+                    display: false,
+                    text: 'Application Status Overview'
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

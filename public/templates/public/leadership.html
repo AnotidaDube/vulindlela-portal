@@ -1,0 +1,100 @@
+{% extends 'coreapp/base.html' %}
+{% block title %}Leadership | Nikita Mangena High{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1><i class="fas fa-users me-2"></i>Leadership & Staff</h1>
+    <p>Meet the dedicated team behind our success</p>
+</div>
+
+<div class="container py-5">
+    
+    {% if admins %}
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-maroon" style="color: #800000;">School Administration</h2>
+        <div class="d-flex justify-content-center mb-4">
+             <div style="height: 3px; width: 100px; background-color: #FFD700;"></div>
+        </div>
+        
+        <div class="row justify-content-center">
+            {% for member in admins %}
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm h-100 text-center">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            {% if member.image %}
+                                <img src="{{ member.image.url }}" class="rounded-circle border border-4 border-warning" style="width: 150px; height: 150px; object-fit: cover;">
+                            {% else %}
+                                <i class="fas fa-user-circle fa-5x text-muted"></i>
+                            {% endif %}
+                        </div>
+                        <h4 class="fw-bold">{{ member.name }}</h4>
+                        <p class="text-danger fw-bold text-uppercase small">{{ member.position }}</p>
+                        <p class="text-muted small">{{ member.bio }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <hr class="my-5">
+
+    <ul class="nav nav-pills justify-content-center mb-4" id="staffTabs">
+        <li class="nav-item">
+            <button class="nav-link active bg-maroon text-white mx-2" data-bs-toggle="pill" data-bs-target="#teachers" style="background-color: #800000;">Teaching Staff</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link border border-danger text-danger mx-2" data-bs-toggle="pill" data-bs-target="#prefects" style="background-color: #800000">Student Leaders</button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="teachers">
+            <div class="row g-4">
+                {% for t in teachers %}
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        {% if t.image %}
+                            <img src="{{ t.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                             <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="fas fa-user text-muted fa-3x"></i>
+                             </div>
+                        {% endif %}
+                        <div class="card-body text-center">
+                            <h6 class="fw-bold">{{ t.name }}</h6>
+                            <small class="text-muted">{{ t.position }}</small>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center text-muted py-4">
+                    <p>No teaching staff profiles uploaded yet.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="prefects">
+            <div class="row g-4">
+                {% for p in prefects %}
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100 border-0 shadow-sm bg-light">
+                        <div class="card-body text-center d-flex flex-column align-items-center justify-content-center">
+                            {% if p.image %}
+                                <img src="{{ p.image.url }}" class="rounded-circle mb-3" style="width: 80px; height: 80px; object-fit: cover;">
+                            {% endif %}
+                            <h6 class="fw-bold">{{ p.name }}</h6>
+                            <span class="badge bg-warning text-dark">{{ p.position }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'coreapp/base.html' %}
+{% block title %}Manage Student Life | Staff{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-maroon text-white">
+                    <h5 class="mb-0">Add New Activity</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-success w-100">Upload Item</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Existing Items</h5>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                            <tr>
+                                <td>
+                                    {% if item.image %}
+                                    <img src="{{ item.image.url }}" style="height: 40px; width: 40px; object-fit: cover; border-radius: 5px;">
+                                    {% endif %}
+                                </td>
+                                <td>{{ item.title }}</td>
+                                <td><span class="badge bg-secondary">{{ item.get_category_display }}</span></td>
+                                <td>
+                                    <a href="{% url 'staff:delete_student_life' item.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this item?')"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="4" class="text-center p-3">No items uploaded yet.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

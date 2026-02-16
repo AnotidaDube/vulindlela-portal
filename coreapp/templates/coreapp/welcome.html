@@ -1,0 +1,286 @@
+{% extends 'coreapp/base.html' %}
+{% load static %}
+
+{% block title %}Welcome | Nikita Mangena High School{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Hero Section with Parallax */
+    .hero-section {
+        position: relative;
+        background-color: #800000; /* Maroon */
+        background: linear-gradient(rgba(128, 0, 0, 0.9), rgba(128, 0, 0, 0.8)), 
+                    url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1500&q=80');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        height: 85vh;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    /* Wave Divider */
+    .custom-shape-divider-bottom-1680000000 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+    }
+
+    .custom-shape-divider-bottom-1680000000 svg {
+        position: relative;
+        display: block;
+        width: calc(138% + 1.3px);
+        height: 80px;
+        transform: rotateY(180deg);
+    }
+
+    .custom-shape-divider-bottom-1680000000 .shape-fill {
+        fill: #f8f9fa;
+    }
+
+    /* --- FIX FOR INVISIBLE TEXT --- */
+    .stats-section {
+        background-color: #800000 !important; /* Maroon */
+        color: #ffffff !important;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+    
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #FFD700 !important; /* Gold */
+        margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+        color: #ffffff !important;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+    }
+
+    /* Feature Cards */
+    .feature-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+    }
+    .icon-circle {
+        width: 80px;
+        height: 80px;
+        background-color: rgba(128, 0, 0, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: #800000;
+        font-size: 2rem;
+    }
+
+    /* Updates Cards */
+    .update-card {
+        cursor: pointer;
+        border-left: 5px solid #FFD700;
+        transition: all 0.2s ease;
+    }
+    .update-card:hover {
+        background-color: #fff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+</style>
+
+<header class="hero-section">
+    <div class="container position-relative z-2">
+        <h1 class="display-3 fw-bold mb-3">
+            Welcome to <span style="color: #FFD700;">Nikita Mangena High</span>
+        </h1>
+        <p class="lead mb-4 fs-4" style="max-width: 800px; margin: 0 auto;">
+            Empowering the youth of Mwenezi with knowledge, discipline, and integrity.
+        </p>
+        <div class="mt-4">
+            <a href="{% url 'students:apply' %}" class="btn btn-apply text-dark btn-lg fw-bold px-5 py-3 rounded-pill shadow">
+                Join Us Today
+            </a>
+            <a href="{% url 'public:about_us' %}" class="btn btn-outline-light btn-lg fw-bold px-5 py-3 rounded-pill ms-2">
+                Learn More
+            </a>
+        </div>
+    </div>
+
+    <div class="custom-shape-divider-bottom-1680000000">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+        </svg>
+    </div>
+</header>
+
+<section id="about" class="py-5 bg-light">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h6 class="text-uppercase text-danger fw-bold letter-spacing-2">Why Choose Us?</h6>
+            <h2 class="fw-bold text-dark display-6">Excellence in Mwenezi</h2>
+            <div class="mx-auto mt-3" style="width: 60px; height: 3px; background-color: #800000;"></div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card feature-card border-0 shadow-sm h-100 p-4 text-center">
+                    <div class="icon-circle">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Academic Focus</h4>
+                    <p class="text-muted">Dedicated teachers ensuring high pass rates in ZIMSEC O and A Level examinations.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card border-0 shadow-sm h-100 p-4 text-center">
+                    <div class="icon-circle">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Community Values</h4>
+                    <p class="text-muted">Deeply rooted in the Mwenezi community, fostering respect and collaboration.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card border-0 shadow-sm h-100 p-4 text-center">
+                    <div class="icon-circle">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Holistic Growth</h4>
+                    <p class="text-muted">Balancing academics with sports, agriculture, and practical skills for life.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="stats-section">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-6 col-md-3">
+                <div class="stat-number count-up" data-target="90">0%</div>
+                <div class="stat-label">Pass Rate</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number count-up" data-target="35">0</div>
+                <div class="stat-label">Teachers</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number count-up" data-target="800">0</div>
+                <div class="stat-label">Students</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-number count-up" data-target="15">0</div>
+                <div class="stat-label">Years Active</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="updates" class="py-5 bg-white">
+    <div class="container py-5">
+        <div class="row align-items-center mb-5">
+            <div class="col-md-8">
+                <h2 class="fw-bold text-dark">News & Announcements</h2>
+                <p class="text-muted">Stay connected with Nikita Mangena High.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card update-card h-100 border-0 bg-light">
+                    <div class="card-body p-4">
+                        <span class="badge bg-warning text-dark mb-2">Admissions</span>
+                        <h5 class="fw-bold mt-2">Form 1 Enrollment</h5>
+                        <p class="small text-muted mb-3"><i class="far fa-clock me-1"></i> Open Now</p>
+                        <p class="card-text">Form 1 places for the upcoming year are now available. Visit us to apply.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card update-card h-100 border-0 bg-light">
+                    <div class="card-body p-4">
+                        <span class="badge bg-success mb-2">Sports</span>
+                        <h5 class="fw-bold mt-2">First Term Sports</h5>
+                        <p class="small text-muted mb-3"><i class="far fa-clock me-1"></i> Coming Soon</p>
+                        <p class="card-text">Our athletics team is preparing for the first term sporting activities for the year 2026.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card update-card h-100 border-0 bg-light">
+                    <div class="card-body p-4">
+                        <span class="badge bg-info text-dark mb-2">Events</span>
+                        <h5 class="fw-bold mt-2">Speech & Prize Giving</h5>
+                        <p class="small text-muted mb-3"><i class="far fa-clock me-1"></i> Nov 2026</p>
+                        <p class="card-text">Celebrating the hard work of our students and staff.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 text-center text-white" style="background: #800000;">
+    <div class="container">
+        <h2 class="fw-bold mb-3">Join Our Community</h2>
+        <a href="{% url 'students:apply' %}" class="btn btn-apply text-dark btn-lg fw-bold rounded-pill px-5 shadow">Apply Now</a>
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const counters = document.querySelectorAll('.count-up');
+    const speed = 200; 
+
+    const animateCounters = () => {
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const targetText = counter.getAttribute('data-target');
+                const target = parseFloat(targetText); 
+                const count = parseFloat(counter.innerText) || 0;
+                const inc = target / speed;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + inc);
+                    setTimeout(updateCount, 20);
+                } else {
+                    if(targetText.includes('%')) counter.innerText = target + "%";
+                    else if (target >= 1000) counter.innerText = (target/1000).toFixed(1) + "k+";
+                    else counter.innerText = target + "+";
+                }
+            };
+            updateCount();
+        });
+    };
+
+    let observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    const statsSection = document.querySelector('.stats-section');
+    if(statsSection) observer.observe(statsSection);
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'coreapp/base.html' %}
+{% block title %}Application Submitted{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm p-4 text-center">
+        <h2 class="mb-3 text-success">🎉 Application Submitted Successfully!</h2>
+        <p>Your registration number is: <strong>{{ reg_no }}</strong></p>
+        <p>Please wait for staff approval. Once approved, you will receive an email with instructions to complete your registration.</p>
+        <a href="{% url 'students:student_login' %}" class="btn btn-primary mt-3">Go to Login</a>
+    </div>
+</div>
+{% endblock %}

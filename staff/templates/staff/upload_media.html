@@ -1,0 +1,58 @@
+{% extends 'coreapp/base.html' %}
+{% block title %}Upload Media | Staff Portal{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow border-top border-4 border-danger">
+                <div class="card-header bg-white">
+                    <h4 class="mb-0 fw-bold text-danger"><i class="fas fa-cloud-upload-alt me-2"></i>Upload to Gallery</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" enctype="multipart/form-data" id="uploadForm">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Title / Caption</label>
+                            {{ form.title }} 
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold"><i class="fas fa-image me-1"></i> Photo</label>
+                                {{ form.image }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold"><i class="fas fa-video me-1"></i> Video</label>
+                                {{ form.video }}
+                            </div>
+                        </div>
+                        <p class="text-muted small fst-italic">* Upload either a photo OR a video (Max 20MB recommended).</p>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description</label>
+                            {{ form.description }}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-lg" id="submitBtn">Publish to Website</button>
+                            <a href="{% url 'staff:dashboard' %}" class="btn btn-light text-muted">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function() {
+        var btn = document.getElementById('submitBtn');
+        // Disable the button so you can't click it twice
+        btn.disabled = true;
+        // Change the text and add a spinner
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Uploading... Please Wait';
+    });
+</script>
+{% endblock %}

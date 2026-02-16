@@ -1,0 +1,206 @@
+{% extends 'coreapp/base.html' %}
+
+{% block title %}Staff Dashboard | Nikita Mangena High{% endblock %}
+
+{% block content %}
+<style>
+    /* --- SIDEBAR STYLING --- */
+    #sidebarMenu {
+        background-color: #800000 !important; /* Force Maroon Background */
+        min-height: 100vh;
+    }
+    
+    .sidebar-heading {
+        color: #FFD700; /* Gold Header */
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+    }
+
+    .sidebar-link {
+        color: #ffffff !important; /* Bright White text */
+        font-weight: 500;
+        padding: 12px 15px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: block;
+        opacity: 0.9;
+    }
+
+    .sidebar-link:hover {
+        background-color: #FFD700 !important; /* Gold on Hover */
+        color: #800000 !important; /* Maroon Text on Hover */
+        transform: translateX(5px);
+        opacity: 1;
+    }
+
+    .sidebar-link.active {
+        background-color: white !important;
+        color: #800000 !important;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        opacity: 1;
+    }
+
+    .sidebar-link i {
+        width: 25px; /* Aligns icons */
+        text-align: center;
+    }
+    
+    /* Stats Cards Hover Effect */
+    .card-stat {
+        transition: transform 0.2s;
+    }
+    .card-stat:hover {
+        transform: translateY(-5px);
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse shadow-sm" style="min-height: 100vh;">
+            <div class="position-sticky pt-4">
+                <h5 class="px-3 pb-3 border-bottom border-secondary sidebar-heading">Menu</h5>
+                <ul class="nav flex-column gap-2 px-2 mt-3">
+                    
+                    <li class="nav-item">
+                        <a class="nav-link sidebar-link active" href="{% url 'staff:dashboard' %}">
+                            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link sidebar-link" href="{% url 'staff:applications' %}">
+                            <i class="fas fa-user-graduate me-2"></i> Applications
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link sidebar-link" href="{% url 'staff:manage_student_life' %}">
+                            <i class="fas fa-futbol me-2"></i> Manage Student Life
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link sidebar-link" href="{% url 'staff:manage_leadership' %}">
+                            <i class="fas fa-user-tie me-2"></i> Manage Staff
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link sidebar-link" href="{% url 'staff:upload_media' %}">
+                            <i class="fas fa-images me-2"></i> Gallery Upload
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            
+            <button class="btn btn-outline-danger d-md-none mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+                <i class="fas fa-bars"></i> Menu
+            </button>
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
+                <h1 class="h2 text-maroon fw-bold" style="color: #800000;">Staff Dashboard</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <span class="text-muted small">Welcome, {{ user.username }}</span>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <div class="col-md-4">
+                    <div class="card card-stat h-100" style="background-color: #800000; color: white;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-white-50 text-uppercase mb-2">Total Students</h6>
+                                    <h2 class="display-6 fw-bold mb-0">{{ total_students }}</h2>
+                                </div>
+                                <i class="fas fa-users fa-3x text-white-50"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card card-stat h-100" style="background-color: #FFD700; color: #333;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted text-uppercase mb-2">Pending Apps</h6>
+                                    <h2 class="display-6 fw-bold mb-0">{{ pending_apps }}</h2>
+                                </div>
+                                <i class="fas fa-clock fa-3x text-dark opacity-25"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card card-stat bg-white border h-100">
+                        <div class="card-body text-center d-flex flex-column justify-content-center">
+                            <h5 class="fw-bold" style="color: #800000;">School Gallery</h5>
+                            <p class="text-muted small mb-3">Upload photos & videos</p>
+                            <a href="{% url 'staff:upload_media' %}" class="btn btn-sm rounded-pill text-white" style="background-color: #800000;">
+                                <i class="fas fa-cloud-upload-alt me-1"></i> Upload Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0 fw-bold" style="color: #800000;"><i class="fas fa-clipboard-list me-2"></i>Pending Applications</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0 align-middle">
+                            <thead class="bg-light text-secondary">
+                                <tr>
+                                    <th class="ps-4">Full Name</th>
+                                    <th>Reg. Number</th>
+                                    <th>Date Applied</th>
+                                    <th class="text-end pe-4">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in pending_students %}
+                                <tr>
+                                    <td class="ps-4 fw-bold text-dark">{{ student.first_name }} {{ student.last_name }}</td>
+                                    <td class="text-muted">{{ student.registration_number }}</td>
+                                    <td class="text-muted small">Today</td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group" role="group">
+                                            <a href="{% url 'staff:approve_student' student.id %}" class="btn btn-sm btn-success text-white">
+                                                <i class="fas fa-check"></i> Approve
+                                            </a>
+                                            <a href="{% url 'staff:reject_student' student.id %}" class="btn btn-sm btn-danger text-white ms-1">
+                                                <i class="fas fa-times"></i> Reject
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center py-5 text-muted">
+                                        <i class="fas fa-check-circle fa-2x mb-3 text-success opacity-50"></i>
+                                        <p class="mb-0">All caught up! No pending applications.</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+{% endblock %}

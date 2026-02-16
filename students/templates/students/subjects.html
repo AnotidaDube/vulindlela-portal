@@ -1,0 +1,28 @@
+{% extends 'coreapp/base.html' %}
+{% load static %}
+{% block title %}My Subjects | Vulindlela Secondary{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="fw-bold text-primary mb-4">📚 My Subjects</h2>
+  <p class="text-muted mb-4">Below is a list of subjects you're currently enrolled in this term.</p>
+
+  <div class="row g-4">
+    {% for subject in subjects %}
+    <div class="col-md-4">
+      <div class="card shadow h-100">
+        <div class="card-body">
+          <h5 class="fw-bold text-info">{{ subject.name }}</h5>
+          <p class="text-muted">Teacher: {{ subject.teacher_name }}</p>
+          <p class="text-muted">Classroom: {{ subject.room_number }}</p>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+      <div class="alert alert-warning">You are not currently enrolled in any subjects.</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

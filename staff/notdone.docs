@@ -1,0 +1,47 @@
+Things not done / incomplete
+
+Approval controls
+
+Currently, the template shows applications and status, but there’s no working approve/reject button or backend logic yet.
+
+Update application status
+
+The view doesn’t have functionality to change status from pending → approved/rejected.
+
+Reports
+
+Admissions reports (e.g., total applications, approved/rejected counts)
+
+Student performance reports (grades, attendance if applicable)
+
+Statistics reports (applications by class, etc.)
+
+Admin integration
+
+If you want staff/admin actions inside Django’s admin site, that may not be configured yet.
+
+Permissions / access control
+
+Only staff should access the staff dashboard, approve/reject applications, and view reports.
+
+📝 Suggested next steps
+
+Add approve/reject actions
+
+Buttons in the template
+
+POST request to a view that updates app.status
+
+Add reports views
+
+Use aggregate() and annotate() in Django ORM for summaries
+
+Test staff permissions
+
+Use @login_required and @user_passes_test decorators or django.contrib.auth.models.Group
+
+Optional: integrate staff actions into Django admin
+
+If you want, I can draft the exact approve/reject functionality and a simple admissions report view that you can plug into your staff module next.
+
+Do you want me to do that?

@@ -1,0 +1,143 @@
+{% extends 'coreapp/base.html' %}
+{% block title %}Gallery | Nikita Mangena High{% endblock %}
+
+{% block content %}
+<style>
+    .gallery-card {
+        transition: transform 0.2s;
+        cursor: pointer;
+    }
+    .gallery-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+    }
+    .description-preview {
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Show only 2 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
+
+<div class="hero">
+    <h1><i class="fas fa-photo-video me-2"></i>School Gallery</h1>
+    <p>Life at Nikita Mangena High School</p>
+</div>
+
+<div class="container mb-5">
+    <div class="row g-4">
+        {% for item in photos %}
+        <div class="col-md-4 col-sm-6">
+            <div class="card h-100 shadow-sm border-0 gallery-card">
+                
+                <div class="ratio ratio-4x3" 
+                     onclick="openModal('{{ item.title|escapejs }}', '{% if item.image %}{{ item.image.url }}{% endif %}', '{{ item.description|escapejs }}', '{% if item.video %}{{ item.video.url }}{% endif %}')">
+                    
+                    {% if item.video %}
+                        <video class="object-fit-cover rounded-top pointer-event-none">
+                            <source src="{{ item.video.url }}" type="video/mp4">
+                        </video>
+                        <div class="position-absolute top-50 start-50 translate-middle">
+                            <i class="fas fa-play-circle fa-4x text-white opacity-75"></i>
+                        </div>
+                    {% elif item.image %}
+                        <img src="{{ item.image.url }}" class="card-img-top object-fit-cover" alt="{{ item.title }}">
+                    {% endif %}
+                </div>
+
+                <div class="card-body">
+                    <h6 class="fw-bold text-danger">{{ item.title }}</h6>
+                    
+                    {% if item.description %}
+                        <div class="text-muted small">
+                            <p class="description-preview mb-1">{{ item.description }}</p>
+                            {% if item.description|length > 60 %}
+                                <a href="#" class="text-danger fw-bold text-decoration-none" 
+                                   onclick="openModal('{{ item.title|escapejs }}', '{% if item.image %}{{ item.image.url }}{% endif %}', '{{ item.description|escapejs }}', '{% if item.video %}{{ item.video.url }}{% endif %}')">
+                                   Read More...
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+                    <small class="text-muted">
+                        <i class="far fa-clock me-1"></i> {{ item.date_added|date:"M d, Y" }}
+                    </small>
+
+                    {% if user.is_authenticated and user.is_staff %}
+                    <a href="{% url 'staff:delete_gallery_item' item.id %}" 
+                       class="btn btn-outline-danger btn-sm rounded-pill px-3"
+                       onclick="event.stopPropagation(); return confirm('Are you sure you want to delete this?');">
+                        <i class="fas fa-trash-alt me-1"></i> Delete
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <h4 class="text-muted">No media uploaded yet. Check back soon!</h4>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-danger" id="modalTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" class="img-fluid rounded w-100 mb-3 d-none">
+                
+                <div id="modalVideoContainer" class="ratio ratio-16x9 mb-3 d-none">
+                    <video id="modalVideo" controls class="rounded">
+                        <source src="" type="video/mp4">
+                    </video>
+                </div>
+
+                <p id="modalDescription" class="text-muted"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal(title, imageUrl, description, videoUrl) {
+        // Set Title & Description
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalDescription').textContent = description;
+
+        // Handle Image vs Video
+        const img = document.getElementById('modalImage');
+        const vidContainer = document.getElementById('modalVideoContainer');
+        const vid = document.getElementById('modalVideo');
+
+        if (videoUrl) {
+            // Show Video, Hide Image
+            img.classList.add('d-none');
+            vidContainer.classList.remove('d-none');
+            vid.src = videoUrl;
+        } else {
+            // Show Image, Hide Video
+            vidContainer.classList.add('d-none');
+            vid.pause(); // Stop video if it was playing
+            img.classList.remove('d-none');
+            img.src = imageUrl;
+        }
+
+        // Show Modal
+        var myModal = new bootstrap.Modal(document.getElementById('galleryModal'));
+        myModal.show();
+    }
+    
+    // Stop video when modal closes
+    document.getElementById('galleryModal').addEventListener('hidden.bs.modal', function () {
+        document.getElementById('modalVideo').pause();
+    });
+</script>
+{% endblock %}

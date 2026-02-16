@@ -1,0 +1,56 @@
+{% extends 'coreapp/base.html' %}
+{% block title %}Student Application{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4"><b>Student Application Form</b></h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Student Name -->
+        <div class="mb-3">
+            <label for="student_name" class="form-label">Full Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="student_name" id="student_name" required>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+            <input type="email" class="form-control" name="email" id="email" required>
+        </div>
+
+        <!-- Select Class -->
+    <div class="mb-3">
+        <label for="applied_class" class="form-label">Select Class <span class="text-danger">*</span></label>
+        <select name="applied_class" id="applied_class" class="form-select" required>
+            <option value="">-- Select Class --</option>
+            {% for cls in classes %}
+                <option value="{{ cls.id }}">{{ cls.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+
+        <!-- Previous Grade Level -->
+        <div class="mb-3">
+            <label for="previous_grade_level" class="form-label">Previous Grade Level <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="previous_grade_level" id="previous_grade_level" placeholder="e.g., Grade 7" required>
+        </div>
+
+        <!-- Previous Grade Results -->
+        <div class="mb-3">
+            <label for="previous_grade_results" class="form-label">Previous Grade Results <span class="text-danger">*</span></label>
+            <textarea class="form-control" name="previous_grade_results" id="previous_grade_results" rows="4" placeholder="Enter your grades here" required></textarea>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary">Apply</button>
+    </form>
+
+    <!-- Extra Links -->
+    <div class="mt-4">
+        <a href="{% url 'students:student_login' %}">Already applied? Login here</a>
+    </div>
+</div>
+{% endblock %}

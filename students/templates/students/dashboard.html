@@ -1,0 +1,71 @@
+{% extends 'coreapp/base.html' %}
+{% load static %}
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Welcome, {{ student.first_name }}!</h2>
+        <a href="{% url 'students:logout' %}" class="btn btn-danger">Logout</a>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <p><strong>Registration Number:</strong> {{ student.registration_number }}</p>
+            <p><strong>Email:</strong> {{ student.email }}</p>
+            <p><strong>Phone:</strong> {{ student.phone_number }}</p>
+        </div>
+        <div class="col-md-6 text-end">
+            <img src="{{ student.photo.url }}" alt="Profile Photo" width="150" class="rounded shadow">
+        </div>
+    </div>
+
+    <hr>
+
+    <h4 class="text-primary mb-4">📚 Academic Tools</h4>
+    <div class="row g-4">
+        <div class="col-md-3">
+            <a href="{% url 'results:student_results' %}" class="text-decoration-none">
+                <div class="card shadow h-100">
+                    <div class="card-body text-center">
+                        
+                        <a href="{% url 'results:student_results' %}?student={{ request.session.student_id }}">View Results</a>
+
+                        <p class="text-muted">Check your exam performance.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'students:view_subjects' %}" class="text-decoration-none">
+                <div class="card shadow h-100">
+                    <div class="card-body text-center">
+                        <h5 class="fw-bold text-info">📚 Subjects</h5>
+                        <p class="text-muted">See your enrolled subjects.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'students:view_calendar' %}" class="text-decoration-none">
+                <div class="card shadow h-100">
+                    <div class="card-body text-center">
+                        <h5 class="fw-bold text-warning">🗓️ School Calendar</h5>
+                        <p class="text-muted">View term dates and events.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'students:view_timetable' %}" class="text-decoration-none">
+                <div class="card shadow h-100">
+                    <div class="card-body text-center">
+                        <h5 class="fw-bold text-primary">⏰ Timetable</h5>
+                        <p class="text-muted">Your weekly class schedule.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

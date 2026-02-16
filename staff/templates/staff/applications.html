@@ -1,0 +1,60 @@
+{% extends 'coreapp/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Student Applications</h2>
+    <table class="table table-hover table-striped mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Reg. Number</th>
+                <th>Applied Class</th>
+                <th>Previous Grade Level</th>
+                <th>Previous Grade Results</th>
+                <th>Submitted At</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ app.student_name }}</td>
+                <td>{{ app.registration_number }}</td>
+                <td>{{ app.applied_class }}</td>
+                <td>{{ app.previous_grade_level }}</td>
+                <td>{{ app.previous_grade_results }}</td>
+                <td>{{ app.submitted_at|date:"Y-m-d H:i" }}</td>
+                <td>
+                    {% if app.status == 'pending' %}
+                        <span class="badge bg-warning">Pending</span>
+                    {% elif app.status == 'approved' %}
+                        <span class="badge bg-success">Approved</span>
+                    {% else %}
+                        <span class="badge bg-danger">Rejected</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if app.status == 'pending' %}
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="application_id" value="{{ app.id }}">
+                        <button type="submit" name="action" value="approve" class="btn btn-success btn-sm">Approve</button>
+                        <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Reject</button>
+                    </form>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9" class="text-center">No applications found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

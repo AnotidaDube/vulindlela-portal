@@ -1,0 +1,144 @@
+{% extends 'coreapp/base.html' %}
+{% block title %}Academics | Nikita Mangena High{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Academic Excellence</h1>
+    <p>Nurturing Intellectual Growth & Critical Thinking</p>
+</div>
+
+<div class="container py-5">
+    
+    <div class="row mb-5 text-center">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-top border-4 border-danger">
+                <div class="card-body">
+                    <i class="fas fa-flask fa-3x text-danger mb-3"></i>
+                    <h5 class="fw-bold">Sciences</h5>
+                    <p class="text-muted small">Physics, Chemistry, Biology, and Computer Science labs equipped for practical learning.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-top border-4 border-warning">
+                <div class="card-body">
+                    <i class="fas fa-calculator fa-3x text-warning"></i>
+                    <h5 class="fw-bold">Commercials</h5>
+                    <p class="text-muted small">Accounting, Business Enterprise, and Economics fostering future entrepreneurs.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-top border-4 border-danger">
+                <div class="card-body">
+                    <i class="fas fa-book-open fa-3x text-danger"></i>
+                    <h5 class="fw-bold">Arts & Humanities</h5>
+                    <p class="text-muted small">History, Geography, Literature, and Shona preserving our heritage and culture.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="fw-bold text-danger mb-4"><i class="fas fa-layer-group me-2"></i>Curriculum Offered</h3>
+    
+    <ul class="nav nav-tabs mb-4" id="academicTabs" role="tablist">
+        <li class="nav-item">
+            <button class="nav-link active text-danger fw-bold" data-bs-toggle="tab" data-bs-target="#zjc">Junior (Form 1-2)</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link text-danger fw-bold" data-bs-toggle="tab" data-bs-target="#olevel">O-Level (Form 3-4)</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link text-danger fw-bold" data-bs-toggle="tab" data-bs-target="#alevel">A-Level (Form 5-6)</button>
+        </li>
+    </ul>
+
+    <div class="tab-content shadow-sm p-4 bg-white rounded border">
+        <div class="tab-pane fade show active" id="zjc">
+            <h5 class="fw-bold mb-3">Zimbabwe Junior Certificate (ZJC)</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>Mathematics</li>
+                        <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>English Language</li>
+                        <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>Shona / Indigenous Language</li>
+                        <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>General Science</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>Heritage Studies</li>
+                        <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>Agriculture</li>
+                        <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>Computer Science</li>
+                        <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>Tech & Design</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="olevel">
+            <h5 class="fw-bold mb-3">ZIMSEC Ordinary Level</h5>
+            <p class="text-muted mb-3">Students must select at least 5 subjects including Math and English.</p>
+            <div class="row">
+                <div class="col-md-4">
+                    <h6 class="text-danger fw-bold">Core Subjects</h6>
+                    <ul class="list-unstyled small">
+                        <li>Mathematics</li>
+                        <li>English Language</li>
+                        <li>Shona</li>
+                        <li>Combined Science</li>
+                        <li>Heritage Studies</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="text-warning fw-bold text-dark">Electives (Science)</h6>
+                    <ul class="list-unstyled small">
+                        <li>Physics</li>
+                        <li>Chemistry</li>
+                        <li>Biology</li>
+                        <li>Geography</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="text-danger fw-bold">Electives (Arts/Comm)</h6>
+                    <ul class="list-unstyled small">
+                        <li>History</li>
+                        <li>Commerce</li>
+                        <li>Business Enterprise</li>
+                        <li>Literature in English</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="alevel">
+            <h5 class="fw-bold mb-3">Advanced Level Combinations</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Category</th>
+                            <th>Popular Combinations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold text-danger">Sciences</td>
+                            <td>Maths, Physics, Chemistry (MPC) <br> Maths, Biology, Chemistry (MBC) <br> Maths, Physics, Geopgraphy(MPG)</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-warning text-dark">Commercials</td>
+                            <td>Accounts, Business Studies, Economics (MOB) <br> Maths, Accounts, Economics</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-danger">Arts</td>
+                            <td>History, Literature, Shona <br> Geography, History, Divinity</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
